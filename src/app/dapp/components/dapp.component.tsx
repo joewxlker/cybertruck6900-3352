@@ -20,6 +20,7 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const events = useContractEvents(contract, 'TrickOrTreatResult')
 
     useEffect(() => {
+        // eslint-disable-next-line  @typescript-eslint/no-explicit-any
         const playerData = events.data?.filter((data:ContractEvent<Record<string, any>>) => data.data.player === form.form.spenderAddress);
         setEventData(playerData);
     }, [events.data, form.form.spenderAddress]);

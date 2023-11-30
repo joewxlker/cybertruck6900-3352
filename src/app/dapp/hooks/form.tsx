@@ -89,7 +89,6 @@ export const useDappForm = (chainId: SupportedChainIds) => {
 
     useEffect(() => {
         if(state !== DappState.PENDING && state !== DappState.PENDING_METAMASK && state !== DappState.REQUIRE_APPROVAL){
-            console.log(form);
             if(!form.contractBalance){
                 updateState(DappState.INSUFFICIENT_CONTRACT_BALANCE);
             } else if(!form.amount || !form.contractBalance || !form.contractAddress || !form.spenderAddress || !form.spenderBalance){
@@ -100,7 +99,7 @@ export const useDappForm = (chainId: SupportedChainIds) => {
                 updateState(DappState.VALID);
             }
         }
-    }, [form, updateState]);
+    }, [form, updateState, state]);
 
     useEffect(() => {
         if(form.contractBalance){
