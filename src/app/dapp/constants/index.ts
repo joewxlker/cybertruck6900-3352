@@ -11,3 +11,13 @@ export const etherscanUrl: {[k in SupportedChainIds] : string } = {
 }
 
 export type SupportedChainIds = ChainId.Mainnet | ChainId.Goerli
+
+export const callMethodNames : {[ k in SupportedChainIds] : string } = {
+    [ChainId.Mainnet]: '',
+    [ChainId.Goerli]: 'testing'
+}
+
+export const callEventNames : {[ k in SupportedChainIds] : string } = {
+    [ChainId.Mainnet]: '',
+    [ChainId.Goerli]: 'TestingResults'
+}

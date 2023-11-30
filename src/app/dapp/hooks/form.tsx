@@ -60,7 +60,6 @@ export const useDappForm = (chainId: SupportedChainIds) => {
     }, [setState]);
 
     const _updateBalances = useCallback((balanceOne: BigNumber, balanceTwo: BigNumber) => {
-        console.log("update balances", balanceOne, balanceTwo);
         balanceOne && updateForm({ contractBalance: Math.round(Number(ethers.utils.formatUnits(balanceOne.toString(), 'gwei'))) });
         balanceTwo && updateForm({ spenderBalance: Math.round(Number(ethers.utils.formatUnits(balanceTwo.toString(), 'gwei'))) });
     }, [updateForm]);
@@ -89,7 +88,7 @@ export const useDappForm = (chainId: SupportedChainIds) => {
 
     useEffect(() => {
         if(state !== DappState.PENDING && state !== DappState.PENDING_METAMASK && state !== DappState.REQUIRE_APPROVAL){
-            if(!form.contractBalance){
+            if(!form.contractBalance || form.contractBalance === 0){
                 updateState(DappState.INSUFFICIENT_CONTRACT_BALANCE);
             } else if(!form.amount || !form.contractBalance || !form.contractAddress || !form.spenderAddress || !form.spenderBalance){
                 updateState(DappState.INVALID_PARAMS);
