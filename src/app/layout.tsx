@@ -1,19 +1,19 @@
 import "~/styles/globals.css";
 
-import { Amatic_SC } from "next/font/google";
+import { Bungee_Hairline, Iceberg, Odibee_Sans, Poiret_One } from "next/font/google";
 import { type Metadata } from "next";
 
 import config from "public/config.json";
 
 export const metadata: Metadata = config.meta;
 
-const heading = Amatic_SC({
+const heading = Bungee_Hairline({
   subsets: ["latin"],
-  weight: "700",
+  weight: "400",
   variable: "--font-heading",
 });
 
-const body = Amatic_SC({
+const body = Poiret_One({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-body",

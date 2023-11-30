@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { type FC } from "react";
 
-export const Button: FC<{ href: string; text: string }> = ({ href, text }) => {
+export const Button: FC<{ href: string; text: string, size: 'big' | 'small' }> = ({ href, text, size }) => {
   return (
     <Link href={href} target="_blank">
-      <div className="rounded border-2 border-t2 p-2 text-t2">
-        <p className="font-heading text-2xl">{text}</p>
+      <div className="border-[1px] border-t2 px-3 py-1 flex justify-center items-center text-t2 backdrop-blur-sm bg-white bg-opacity-10 shadow-sm shadow-shadow">
+        <p className={`
+          ${size === 'big' && 'xl:text-3xl lg:text-3xl text-xl'} 
+          ${size === 'small' && 'xl:text-2xl lg:text-2xl text-xl'} 
+          font-heading 
+        `}>{text}</p>
       </div>
     </Link>
   );

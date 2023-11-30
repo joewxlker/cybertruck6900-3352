@@ -25,21 +25,22 @@ export const Header: FC<{ layout: string; config: ProjectInfo }> = ({
   );
   return (
     <div
-      className={`${layout} fixed left-0 right-0 top-0 flex flex-row bg-p1 py-2 shadow-sm shadow-shadow`}
+      className={`${layout} fixed left-0 right-0 z-50 top-0 flex flex-row backdrop-blur-md py-2 border-b-[1px] border-opacity-30 border-b-t1`}
     >
-      <div className="flex flex-1 flex-col justify-center">
-        <Link href="/">
-          <Image src="" alt="" height={40} width={40} />
+      <div className="flex-1">
+        <Link className="flex w-fit px-2 flex-row items-center" href="/">
+          <Image src="/logo-100px.png" className="rounded-full" alt="" height={50} width={50} />
+          <Image src='/white-text-180x50px.png' alt='' height={50 * 0.6} width={180 * 0.6} />
         </Link>
       </div>
       <div className="flex-1" />
-      <div className="hidden flex-1 flex-row items-center justify-evenly gap-5 md:flex lg:flex xl:flex">
+      <div className="hidden flex-1 flex-row items-center justify-end gap-5 md:flex lg:flex xl:flex">
         {sections?.map((section) => (
           <Link key={section.title} href={section.href}>
-            <h3 className="font-body text-2xl text-t1">{section.title}</h3>
+            <h3 className="font-body text-xl text-t1">{section.title}</h3>
           </Link>
         ))}
-        <Button href={config.dextools} text="CHART" />
+        <Button href="/dapp" text="DAPP" size="small" />
       </div>
       <div className="flex flex-1 flex-row items-center justify-end md:hidden lg:hidden xl:hidden">
         <button

@@ -1,0 +1,23 @@
+{
+    "tokenData": [
+      { "title": "Symbol", "body": "$CYBERTRUCK"},
+      { "title": "Name", "body": "CYBERTRUCK"},
+      { "title": "Address", "body": "0x00...0000"},
+      { "title": "Decimals", "body": "9"}
+    ],
+    "distribution" :[
+    {
+      "title": "Initial Supply Allocation",
+      "children": [
+        { "title": "Liquidity", "body": "", "amount": "0.7" },
+        { "title": "Utility", "body": "", "amount": "0.3" }
+      ]
+    },
+  {
+    "title": "Taxes",
+    "children": [
+        { "title": "Liquidity", "body": "", "amount": "0.5" },
+        { "title": "Utility", "body": "", "amount": "0.5" }
+    ]
+  }
+]}

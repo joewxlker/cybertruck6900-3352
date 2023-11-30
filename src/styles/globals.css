@@ -5,3 +5,19 @@
 html {
     scroll-behavior: smooth !important;
 }
+
+#landing {
+    background-image: linear-gradient(rgba(255,255,255,0.3), transparent), url('/landing.jpeg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    mask-image: linear-gradient(black, transparent);
+}
+
+#footer {
+    background-image: linear-gradient(rgba(255,255,255,0.3), transparent), url('/landing.jpeg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: top;
+    mask-image: linear-gradient(transparent, black);
+}

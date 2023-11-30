@@ -8,7 +8,7 @@ export const Socials: FC<{ config: ProjectInfo }> = ({ config }) => {
       {icons.map((icon, idx) => (
         <div
           key={idx}
-          className="h-8 w-8 md:h-10 md:w-10 lg:h-10 lg:w-10 xl:h-10  xl:w-10"
+          className="h-7 w-7"
         >
           {icon({ fill: "#ffffff", config })}
         </div>

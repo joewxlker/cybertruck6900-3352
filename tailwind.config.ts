@@ -10,11 +10,11 @@ export default {
       },
       colors: {
         p1: "#151515", // Bright yellow
-        s1: "#232323", // Dark background
+        s1: "#000000", // Dark background
         s2: "#333333", // Slightly lighter background
         s3: "#444444", // Even lighter background
-        t1: "#FFFFFF", // White text
-        t2: "#DDDDDD", // Light gray text
+        t1: "#ffffff", // White text
+        t2: "#ffffff", // Light gray text
         shadow: "rgba(0, 0, 0, 0.2)", // Slight shadow
       },
     },

@@ -6,7 +6,7 @@ const Container: FC<{ id: string; children: ReactNode }> = ({
   children,
 }) => {
   return (
-    <section className="flex w-full flex-col gap-5 py-20" id={id}>
+    <section className="min-h-screen justify-center flex w-full flex-col gap-5 py-20" id={id}>
       {children}
     </section>
   );
@@ -15,7 +15,7 @@ const Container: FC<{ id: string; children: ReactNode }> = ({
 const Header: FC<{ title: string }> = ({ title }) => {
   return (
     <div className="flex w-full flex-row items-center py-12">
-      <h2 className="font-heading text-4xl text-t2">
+      <h2 className="font-heading text-3xl text-t2 xl:text-left lg:text-left text-center w-full">
         {title[0]?.toUpperCase()}
         {title.slice(1)}
       </h2>
@@ -48,10 +48,11 @@ const Graphics: FC<{
   height: number;
   width: number;
   alt: string;
-}> = ({ src, alt }) => {
+  opaque?: boolean;
+}> = ({ src, alt, height, width, opaque }) => {
   return (
-    <div className={`flex w-[500px] max-w-[90vw] flex-row`}>
-      <Image src={src} height={300} width={500} alt={alt} />
+    <div className={`xl:flex-1 lg:w-full flex max-w-full justify-center items-center flex-row ${opaque && 'opacity-60'}`}>
+      <Image src={src} height={height} width={width} alt={alt} />
     </div>
   );
 };

@@ -21,7 +21,7 @@ export const Contract: FC<{ contractAddress: string }> = ({
         <p
           className={`${
             copied ? "text-lime-500" : "text-t2"
-          } hidden text-center font-body text-4xl transition-colors duration-300 md:block lg:block xl:block`}
+          } hidden text-center font-body text-xl transition-colors duration-300 md:block lg:block xl:block`}
         >
           Contract : {contractAddress}
         </p>
