@@ -7,5 +7,5 @@ export const erc20Addresses = {
 
 export const trickOrTreatAddresses = {
     [ChainId.Mainnet] : '',
-    [ChainId.Goerli] : '0x20B869577528f901Ede5916d00659d878Efc754c'
+    [ChainId.Goerli] : '0x0f54b8dCdf330Ca138d60317422090A9085A47F8'
 };
