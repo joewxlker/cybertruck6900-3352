@@ -20,7 +20,7 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const events = useContractEvents(contract, 'TrickOrTreatResult')
 
     useEffect(() => {
-        const playerData = events.data?.filter((data: { data: { player: string } }) => data.data.player === form.form.spenderAddress);
+        const playerData = events.data?.filter((data:ContractEvent<Record<string, any>>) => data.data.player === form.form.spenderAddress);
         setEventData(playerData);
     }, [events.data, form.form.spenderAddress]);
 
