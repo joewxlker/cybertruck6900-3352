@@ -1,9 +1,9 @@
 "use client"
 
-import { useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent } from "@thirdweb-dev/react";
+import { useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent, useContractWrite } from "@thirdweb-dev/react";
 import Image from "next/image"
 import { type ChangeEvent, type FC, useCallback, useEffect, useState } from "react"
-import { type BaseContract, ethers } from "ethers";
+import { type BaseContract, ethers, utils } from "ethers";
 import { DappState, useDappForm } from "../hooks/form";
 import { DappFormComponent } from "./form.component";
 import { DappHeaderComponent } from "./header.component";
@@ -18,6 +18,8 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const disconnect = useDisconnect();
     const { contract } = useContract(trickOrTreatAddresses[chainId], trickOrTreatAbi);
     const events = useContractEvents(contract, callEventNames[chainId]);
+
+    const { mutateAsync, isLoading, error } = useContractWrite(contract,callMethodNames[chainId]);
 
     useEffect(() => {
         // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -40,9 +42,12 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const onSubmit = useCallback((contract: SmartContract<BaseContract>) => {
         if(form.form.amount){
             form.updateState(DappState.PENDING_METAMASK);
-            contract
-            .call(callMethodNames[chainId], [ethers.utils.parseUnits(form.form.amount.toFixed(9), 'gwei')])
-            .then(() => {
+            mutateAsync({
+                args: [ethers.utils.parseUnits(form.form.amount.toFixed(9), 'gwei')],
+                overrides: {
+                  gasLimit: 200000, // override default gas limit
+                },
+            }).then(() => {
                 form.updateBalances();
                 form.updateForm({ amount: 0 });
                 form.updateState(DappState.INVALID_PARAMS);
