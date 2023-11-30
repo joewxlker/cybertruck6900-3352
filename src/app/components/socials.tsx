@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { type FC } from "react";
 import { icons } from "./icons";
-import { ProjectInfo } from "../models/project.model";
+import { type ProjectInfo } from "../models/project.model";
 
 export const Socials: FC<{ config: ProjectInfo }> = ({ config }) => {
   return (

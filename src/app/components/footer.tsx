@@ -5,7 +5,6 @@ import { type ProjectInfo } from "~/app/models/project.model";
 import { Button } from "./button";
 
 export const Footer: FC<{ layout: string; config: ProjectInfo }> = ({
-  layout,
   config,
 }) => {
   return (

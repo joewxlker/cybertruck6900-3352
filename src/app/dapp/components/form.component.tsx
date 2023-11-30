@@ -2,7 +2,7 @@ import { Web3Button } from "@thirdweb-dev/react";
 import { type SmartContract } from "@thirdweb-dev/sdk";
 import { type BaseContract } from "ethers";
 import { type ChangeEvent, type FC, useCallback } from "react";
-import { erc20Addresses, erc20Abi, trickOrTreatAbi, type SupportedChainIds, trickOrTreatAddresses } from "../constants";
+import { trickOrTreatAbi, type SupportedChainIds, trickOrTreatAddresses } from "../constants";
 import { type FormState, DappState } from "../hooks/form";
 import Image from "next/image";
 
@@ -12,14 +12,16 @@ interface DappFormProps {
     onUpdateAmount: (amount: ChangeEvent<HTMLInputElement>) => void;
     onSetAmountAsPercentage: (amount: number) => void;
     onSubmit: (contract: SmartContract<BaseContract>) => void;
-    onApprove: (contract: SmartContract<BaseContract>) => void;
+    // onApprove: (contract: SmartContract<BaseContract>) => void;
     onError: (error: unknown) => void;
 }
-export const DappFormComponent: FC<DappFormProps> = ({ chainId, form, onUpdateAmount, onSetAmountAsPercentage, onSubmit, onApprove, onError }) => {
+export const DappFormComponent: FC<DappFormProps> = ({ chainId, form, onUpdateAmount, onSetAmountAsPercentage, onSubmit, 
+    // onApprove, 
+    onError }) => {
     const updateAmount = useCallback((amount: ChangeEvent<HTMLInputElement>) => onUpdateAmount(amount), [onUpdateAmount]);
     const setAmountAsPercentage = useCallback((amount: number) => onSetAmountAsPercentage(amount), [onSetAmountAsPercentage]);
     const submit = useCallback((contract: SmartContract<BaseContract>) => onSubmit(contract), [onSubmit]);
-    const approve = useCallback((contract: SmartContract<BaseContract>) => onApprove(contract), [onApprove]);
+    // const approve = useCallback((contract: SmartContract<BaseContract>) => onApprove(contract), [onApprove]);
     const error = useCallback((error: unknown) => onError(error), [onError]);
     return (
         <form className="flex-1 flex flex-col gap-5 justify-evenly">
@@ -85,7 +87,7 @@ export const DappFormComponent: FC<DappFormProps> = ({ chainId, form, onUpdateAm
                     {form.state === DappState.VALID && <p className='text-md text-center text-t2'>Trick or Treat</p>}
                     {form.state === DappState.ERROR && <p className='text-md text-center text-t2'>Error Try Again</p>}
             </Web3Button>}
-            {form.state === DappState.REQUIRE_APPROVAL && <Web3Button
+            {/* {form.state === DappState.REQUIRE_APPROVAL && <Web3Button
                 className="!bg-white !bg-opacity-30 border-t1 border-[1px] !text-white !font-heading !text-2xl !shadow-md !shadow-black !hover:bg-opacity-50 !transition-all !duration-300"
                 type='button'
                 theme='dark'
@@ -93,7 +95,7 @@ export const DappFormComponent: FC<DappFormProps> = ({ chainId, form, onUpdateAm
                 contractAddress={erc20Addresses[chainId]}
                 action={approve}>
                     <p className='text-md text-t2'>Approve</p>
-            </Web3Button>}
+            </Web3Button>} */}
             <p className="text-white font-body text-center xl:hidden lg:hidden block">
                 Enter an amount and hit confirm for a chance at doubling your input amount or winning a tesla cybertruck
             </p>

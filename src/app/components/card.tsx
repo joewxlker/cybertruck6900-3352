@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ReactNode, type FC } from "react";
+import { type ReactNode, type FC } from "react";
 
 const Container: FC<{ children: ReactNode }> = ({ children }) => {
   return (

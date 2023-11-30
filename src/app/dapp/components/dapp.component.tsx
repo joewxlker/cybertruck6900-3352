@@ -1,13 +1,13 @@
 "use client"
 
-import { useAddress, useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent } from "@thirdweb-dev/react";
+import { useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent } from "@thirdweb-dev/react";
 import Image from "next/image"
 import { type ChangeEvent, type FC, useCallback, useEffect, useState } from "react"
 import { type BaseContract, ethers } from "ethers";
 import { DappState, useDappForm } from "../hooks/form";
 import { DappFormComponent } from "./form.component";
 import { DappHeaderComponent } from "./header.component";
-import { SupportedChainIds, trickOrTreatAbi, trickOrTreatAddresses } from "../constants";
+import { type SupportedChainIds, trickOrTreatAbi, trickOrTreatAddresses } from "../constants";
 import { ResultsComponent } from "./results.component";
 
 export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
@@ -20,7 +20,7 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const events = useContractEvents(contract, 'TrickOrTreatResult')
 
     useEffect(() => {
-        const playerData = events.data?.filter((data: any) => data.data.player === form.form.spenderAddress);
+        const playerData = events.data?.filter((data: { data: { player: string } }) => data.data.player === form.form.spenderAddress);
         setEventData(playerData);
     }, [events.data, form.form.spenderAddress]);
 
@@ -46,26 +46,25 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
                 form.updateForm({ amount: 0 });
                 form.updateState(DappState.INVALID_PARAMS);
             })
-            .catch((err: any) => {
+            .catch((err: unknown) => {
                 console.log(err);
                 form.updateState(DappState.ERROR);
             });
         }
     }, [form]);
 
-    const onApprove = useCallback((contract: SmartContract<BaseContract>) => {
-        contract
-        .call("trickOrTreat", [])
-        .then((data: any) => {
-            console.log(data);
-            form.updateBalances();
-            form.updateState(DappState.INVALID_PARAMS);
-        })
-        .catch((err: any) => {
-            console.log(err);
-            form.updateState(DappState.ERROR);
-        });
-    }, [form]);
+    // const onApprove = useCallback((contract: SmartContract<BaseContract>) => {
+    //     contract
+    //     .call("trickOrTreat", [])
+    //     .then(() => {
+    //         form.updateBalances();
+    //         form.updateState(DappState.INVALID_PARAMS);
+    //     })
+    //     .catch((err: unknown) => {
+    //         console.log(err);
+    //         form.updateState(DappState.ERROR);
+    //     });
+    // }, [form]);
 
     const handleError = useCallback((err: unknown) => {
         console.log(err);
@@ -88,7 +87,7 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
                         onError={handleError}
                         onSetAmountAsPercentage={setAmountAsPercentage} 
                         onSubmit={onSubmit}
-                        onApprove={onApprove}
+                        // onApprove={onApprove}
                         onUpdateAmount={updateAmount} 
                         form={form}/>
                 </div>
