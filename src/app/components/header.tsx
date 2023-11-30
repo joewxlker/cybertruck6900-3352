@@ -40,7 +40,7 @@ export const Header: FC<{ layout: string; config: ProjectInfo }> = ({
             <h3 className="font-body text-xl text-t1">{section.title}</h3>
           </Link>
         ))}
-        <Button href="/dapp" text="DAPP" size="small" />
+        <Button internal href="/dapp" text="DAPP" size="small" />
       </div>
       <div className="flex flex-1 flex-row items-center justify-end md:hidden lg:hidden xl:hidden">
         <button

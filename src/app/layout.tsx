@@ -4,6 +4,7 @@ import { Bungee_Hairline, Iceberg, Odibee_Sans, Poiret_One } from "next/font/goo
 import { type Metadata } from "next";
 
 import config from "public/config.json";
+import { Header } from "./components/header";
 
 export const metadata: Metadata = config.meta;
 

@@ -7,6 +7,7 @@ html {
 }
 
 #landing {
+    animation: fadein 1s linear;
     background-image: linear-gradient(rgba(255,255,255,0.3), transparent), url('/landing.jpeg');
     background-size: cover;
     background-attachment: fixed;
@@ -20,4 +21,13 @@ html {
     background-attachment: fixed;
     background-position: top;
     mask-image: linear-gradient(transparent, black);
+}
+
+#dapp {
+    animation: fadein 1s linear;
+}
+
+@keyframes fadein {
+    from { opacity: 0% }
+    to { opacity: 100% }
 }

@@ -1,35 +1,29 @@
-import { useAddress, useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent } from "@thirdweb-dev/react";
+"use client"
+
+import { useAddress, useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent, ChainId } from "@thirdweb-dev/react";
 import Image from "next/image"
 import { type ChangeEvent, type FC, useCallback, useEffect, useState } from "react"
 import { type BaseContract, ethers } from "ethers";
 import { DappState, useDappForm } from "../hooks/form";
 import { DappFormComponent } from "./form.component";
 import { DappHeaderComponent } from "./header.component";
-import { trickOrTreatAbi, trickOrTreatAddressV2 } from "../constants";
+import { trickOrTreatAbi, trickOrTreatAddresses } from "../constants";
 import { ResultsComponent } from "./results.component";
 
-export const Dapp: FC<{module?: boolean; onClose?: ()=> void; onOpen?: ()=> void}> = ({ module, onClose, onOpen }) => {
+export const Dapp: FC<{ chainId: ChainId.Mainnet | ChainId.Goerli;}> = ({ chainId }) => {
 
     const [eventData, setEventData] = useState<ContractEvent<Record<string, unknown>>[] | undefined>();
 
     const form = useDappForm();
     const address = useAddress();
     const disconnect = useDisconnect();
-    const { contract } = useContract(trickOrTreatAddressV2, trickOrTreatAbi);
+    const { contract } = useContract(trickOrTreatAddresses[chainId], trickOrTreatAbi);
     const events = useContractEvents(contract, 'TrickOrTreatResult')
 
     useEffect(() => {
         const playerData = events.data?.filter(data => data.data.player === form.form.spenderAddress);
         setEventData(playerData);
     }, [events.data, form.form.spenderAddress]);
-
-    const close = useCallback(() => {
-        onClose && onClose();
-    }, [onClose]);
-
-    const open = useCallback(() => {
-        onOpen && onOpen();
-    }, [onOpen]);
 
     const updateAmount = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         if(!Number.isNaN(Number(event.target.value))){
@@ -84,16 +78,14 @@ export const Dapp: FC<{module?: boolean; onClose?: ()=> void; onOpen?: ()=> void
     }, [disconnect]);
 
     return (
-        <div className={`${module? 'w-[800px]' : 'w-full'} flex flex-col bg-b3 gradient rounded-xl overflow-clip border-2 border-b2 shadow-black shadow-lg p-4 max-w-[100vw]`}>
-            <DappHeaderComponent
-                module={module} 
-                onClose={close} 
-                onOpen={open} 
+        <div id="dapp" className={`w-full flex flex-col bg-b3 overflow-clip border-[1px] border-opacity-30 border-t1 shadow-black shadow-lg p-4 max-w-[100vw]`}>
+            <DappHeaderComponent 
                 onDisconnect={onDisconnect} 
                 address={address}/>
-            {!form.form.loading && form.state !== DappState.PENDING && form.state !== DappState.PENDING_METAMASK &&  <div className="flex flex-row flex-wrap gap-5 h-[300px]">
-                <div className="flex-1 w-full flex flex-col p-5 shadow-md shadow-black bg-b3 gradient-bg rounded min-w-[15rem]">
+            {!form.form.loading && form.state !== DappState.PENDING && form.state !== DappState.PENDING_METAMASK &&  <div className="flex flex-row xl:flex-nowrap lg:flex-nowrap flex-wrap gap-5 min-h-[300px]">
+                <div className="w-full flex flex-col px-2 py-3 bg-p1 shadow-inner shadow-black bg-b3 min-w-[15rem]">
                     <DappFormComponent
+                        chainId={chainId}
                         onError={handleError}
                         onSetAmountAsPercentage={setAmountAsPercentage} 
                         onSubmit={onSubmit}
@@ -101,8 +93,8 @@ export const Dapp: FC<{module?: boolean; onClose?: ()=> void; onOpen?: ()=> void
                         onUpdateAmount={updateAmount} 
                         form={form}/>
                 </div>
-                <div className="flex-1 w-full h-full flex flex-col bg-stone-950 rounded-md justify-start items-start min-w-[15rem] overflow-auto">
-                    <ResultsComponent eventData={eventData}/>
+                <div className="w-full flex flex-col bg-p1 justify-start shadow-inner items-start min-w-[15rem] overflow-auto">
+                    <ResultsComponent chainId={chainId} eventData={eventData}/>
                 </div>
             </div>}
             {!form.form.loading && form.state === DappState.PENDING &&  <div className="flex flex-row flex-wrap gap-5 h-[300px]">

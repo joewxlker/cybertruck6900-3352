@@ -1,12 +1,13 @@
 import { Web3Button } from "@thirdweb-dev/react";
-import { type SmartContract } from "@thirdweb-dev/sdk";
+import { ChainId, type SmartContract } from "@thirdweb-dev/sdk";
 import { type BaseContract } from "ethers";
 import { type ChangeEvent, type FC, useCallback } from "react";
-import { erc20Address, trickOrTreatAddressV2, erc20Abi, trickOrTreatAbi } from "../constants";
+import { erc20Addresses, trickOrTreatAddressV2, erc20Abi, trickOrTreatAbi } from "../constants";
 import { type FormState, DappState } from "../hooks/form";
 import Image from "next/image";
 
 interface DappFormProps {
+    chainId: ChainId.Mainnet | ChainId.Goerli;
     form: {form: FormState, state: DappState}; 
     onUpdateAmount: (amount: ChangeEvent<HTMLInputElement>) => void;
     onSetAmountAsPercentage: (amount: number) => void;
@@ -14,7 +15,7 @@ interface DappFormProps {
     onApprove: (contract: SmartContract<BaseContract>) => void;
     onError: (error: unknown) => void;
 }
-export const DappFormComponent: FC<DappFormProps> = ({ form, onUpdateAmount, onSetAmountAsPercentage, onSubmit, onApprove, onError }) => {
+export const DappFormComponent: FC<DappFormProps> = ({ chainId, form, onUpdateAmount, onSetAmountAsPercentage, onSubmit, onApprove, onError }) => {
     const updateAmount = useCallback((amount: ChangeEvent<HTMLInputElement>) => onUpdateAmount(amount), [onUpdateAmount]);
     const setAmountAsPercentage = useCallback((amount: number) => onSetAmountAsPercentage(amount), [onSetAmountAsPercentage]);
     const submit = useCallback((contract: SmartContract<BaseContract>) => onSubmit(contract), [onSubmit]);
@@ -24,51 +25,51 @@ export const DappFormComponent: FC<DappFormProps> = ({ form, onUpdateAmount, onS
         <form className="flex-1 flex flex-col gap-5 justify-evenly">
             <div className='flex flex-row justify-between items-center w-full'>
                 <label>
-                    <p className='text-xl text-white font-body'>Spooky Balance : {form.form.spenderBalance ?? 0}</p>
+                    <p className='text-xl text-white font-body'>$CYBER Balance : {form.form.spenderBalance ?? 0}</p>
                 </label>
-                <div className="group relative rounded-full flex justify-center items-center cursor-pointer">
-                    <Image src='/icons/jacko.svg' alt='' height={20} width={20} />
-                    <div className='absolute hidden group-hover:flex left-[50%] -top-[60px] p-1 -translate-x-[50%] bg-black bg-opacity-90 rounded w-60'>
+                <div className="group relative rounded-full justify-center items-center cursor-pointer xl:flex lg:flex hidden">
+                    <Image className="opacity-50 hover:opacity-100 duration-300 transition-opacity" src='/icons/info.svg' alt='' height={20} width={20} />
+                    <div className='absolute opacity-0 group-hover:opacity-100 left-[50%] -top-[85px] p-1 -translate-x-[50%] bg-black bg-opacity-90 w-80 transition-all duration-300'>
                         <p className="text-white font-body">
-                            Enter an amount and hit confirm to see if you get a trick or a treat.
+                            Enter an amount and hit confirm for a chance at doubling your input amount or winning a tesla cybertruck
                         </p>
                     </div>
                 </div>
             </div>
             <div className="w-full relative">
                 <div className="absolute right-0 top-0 bottom-0 pr-3 py-3 flex justify-center items-center">
-                    <button type='button' disabled className="bg-b1 flex flex-row h-full px-2 items-center rounded gap-2">
-                        <p className='text-white font-heading text-2xl'>SPOOKY</p>
-                        <Image src="" alt="" height={25} width={25} />
+                    <button type='button' disabled className="bg-b1 flex flex-row h-full px-2 items-center gap-2">
+                        <p className='text-white font-heading text-2xl'>$CYBER</p>
+                        <Image src="/logo-nobg100px.png" alt="" height={25} width={25} />
                     </button>
                 </div>
-                <input min='0' value={form.form.amount ?? 0} onChange={updateAmount} className="p-4 py-5 rounded w-full bg-black text-white text-xl font-body" placeholder="0" />
+                <input min='0' value={form.form.amount ?? 0} onChange={updateAmount} className="p-4 py-5 w-full focus:border-blue-400 border-t1 bg-black border-opacity-30 border-[1px] rounded text-white text-xl font-body" placeholder="0" />
             </div>
             <div className="gap-2 flex flex-row justify-end h-full">
                 <button 
                     onClick={() => setAmountAsPercentage(0.1)}
                     disabled={!form.form.spenderBalance}
                     type='button'
-                    className={`${!form.form.spenderBalance ? 'opacity-50' : 'hover:bg-t2' } h-full flex-1 rounded bg-[#fbbf24]`}>
-                        <p className='text-b3 font-heading text-2xl'>10%</p>
+                    className={`${!form.form.spenderBalance ? 'opacity-50' : 'hover:bg-opacity-50' } h-full flex-1 border-t1 border-[1px] bg-t1 bg-opacity-30 border-opacity-30 transition-all duration-300`}>
+                        <p className='text-b3 font-heading text-2xl text-t1'>10%</p>
                 </button>
                 <button 
                     onClick={() => setAmountAsPercentage(0.5)}
                     disabled={!form.form.spenderBalance}
                     type='button'
-                    className={`${!form.form.spenderBalance ? 'opacity-50' : 'hover:bg-b2' } h-full flex-1 rounded bg-t2`}>
-                        <p className='text-b3 font-heading text-2xl'>50%</p>
+                    className={`${!form.form.spenderBalance ? 'opacity-50' : 'hover:bg-opacity-50' } h-full flex-1 border-t1 border-[1px] bg-t1 bg-opacity-30 border-opacity-30 transition-all duration-300`}>
+                        <p className='text-b3 font-heading text-2xl text-t1'>50%</p>
                 </button>
                 <button
                     onClick={() => setAmountAsPercentage(1)}
                     disabled={!form.form.spenderBalance}
                     type='button'
-                    className={`${!form.form.spenderBalance ? 'opacity-50' : 'hover:bg-t2' } h-full flex-1 rounded bg-b2`}>
-                        <p className='text-b3 font-heading text-2xl'>100%</p>
+                    className={`${!form.form.spenderBalance ? 'opacity-50' : 'hover:bg-opacity-50' } h-full flex-1 border-t1 border-[1px] bg-t1 bg-opacity-30 border-opacity-30 transition-all duration-300`}>
+                        <p className='text-b3 font-heading text-2xl text-t1'>100%</p>
                 </button>
             </div>
             {form.state !== DappState.REQUIRE_APPROVAL && <Web3Button
-                className="!bg-black !text-white !font-heading !text-2xl !shadow-md !shadow-black hover:scale-105 !transition-transform !duration-300"
+                className="!bg-white !bg-opacity-30 border-t1 border-[1px] !text-white !font-heading !text-2xl !shadow-md !shadow-black hover:!bg-opacity-50 !transition-all !duration-300"
                 type='button'
                 isDisabled={form.state !== DappState.VALID}
                 theme='dark'
@@ -84,14 +85,17 @@ export const DappFormComponent: FC<DappFormProps> = ({ form, onUpdateAmount, onS
                     {form.state === DappState.ERROR && <p className='md text-t2'>Error Try Again</p>}
             </Web3Button>}
             {form.state === DappState.REQUIRE_APPROVAL && <Web3Button
-                className="!bg-black !text-white !font-heading !text-2xl !shadow-md !shadow-black hover:scale-105 !transition-transform !duration-300"
+                className="!bg-white !bg-opacity-30 border-t1 border-[1px] !text-white !font-heading !text-2xl !shadow-md !shadow-black !hover:bg-opacity-50 !transition-all !duration-300"
                 type='button'
                 theme='dark'
                 contractAbi={erc20Abi}
-                contractAddress={erc20Address}
+                contractAddress={erc20Addresses[chainId]}
                 action={approve}>
                     <p className='md text-t2'>Approve</p>
             </Web3Button>}
+            <p className="text-white font-body text-center xl:hidden lg:hidden block">
+                Enter an amount and hit confirm for a chance at doubling your input amount or winning a tesla cybertruck
+            </p>
         </form>
     )
 }

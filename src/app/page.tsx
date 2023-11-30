@@ -17,7 +17,7 @@ export default function HomePage() {
 
   return (
     <main className={`flex min-h-screen flex-col items-center justify-center xl:gap-20 lg:gap-5 gap-5 text-black`}>
-      <Header config={projectData} layout={layout} />
+      <Header config={config} layout={"px-2 max-w-[2000px] m-auto xl:px-12 lg:px-12"} />
       <Landing layout={layout} />
       <About layout={layout} />
       <Tokenomics layout={layout} />
