@@ -1,12 +1,9 @@
-import { Button } from "./components/button";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 
 import config from "public/config.json";
 import { type ProjectInfo } from "~/app/models/project.model";
 import { Landing } from "./features/landing";
-import { Section } from "./components/section";
-import { SectionWrapper } from "./components/sectionWrapper";
 import { About } from "./features/about";
 import { Tokenomics } from "./features/tokenomics";
 

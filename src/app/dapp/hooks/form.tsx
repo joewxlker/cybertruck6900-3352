@@ -1,7 +1,7 @@
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { ethers, type BigNumber } from "ethers";
 import { useState, useEffect, useCallback } from "react";
-import { erc20Abi, erc20Addresses, SupportedChainIds, trickOrTreatAddresses } from "../constants";
+import { erc20Abi, erc20Addresses, type SupportedChainIds, trickOrTreatAddresses } from "../constants";
 
 export interface FormState {
     amount: number | null;

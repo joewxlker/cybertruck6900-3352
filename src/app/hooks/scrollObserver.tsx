@@ -15,7 +15,11 @@ export const useScrollObserver = () => {
         }
     }
 
-    const handleIntersection = (entry: any) => setInView((entry[0] as IntersectionObserverEntry).isIntersecting);
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+        const entry = entries[0]
+        if(entry){
+            setInView(entry.isIntersecting)};
+        }
 
     return { initialize, inView };
 }

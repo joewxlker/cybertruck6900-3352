@@ -44,11 +44,11 @@ const DistributionItem:FC<{ title: string; children: { title: string; body: stri
     );
 }
   
-function DistributionData({ amount, body, parentTitle, title }: { title: string; body: string; amount: string; parentTitle: string }) {
+function DistributionData({ amount, parentTitle, title }: { title: string; body: string; amount: string; parentTitle: string }) {
     return (
         <div style={{ flex: amount }} className="bg-white bg-opacity-10 xl:p-3 lg:p-3 p-2 hover:bg-opacity-20 transition-opacity duration-300">
             <h5 className='text-t1 xl:text-xl lg:text-xl text-lg font-body'>{title}</h5>
-            <p className='text-t1 xl:text-xl lg:text-xl text-lg font-body'>{title === 'Taxes' ? parseFloat(amount) * 10 : parseFloat(amount) * 100}%</p>
+            <p className='text-t1 xl:text-xl lg:text-xl text-lg font-body'>{parentTitle === 'Taxes' ? parseFloat(amount) * 10 : parseFloat(amount) * 100}%</p>
         </div>
     );
 }

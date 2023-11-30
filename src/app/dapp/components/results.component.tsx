@@ -3,7 +3,7 @@ import { type BigNumber, ethers } from "ethers";
 import Image from "next/image";
 import Link from "next/link";
 import { type FC } from "react"
-import { CHAIN_ID, etherscanUrl } from "../constants";
+import { type CHAIN_ID, etherscanUrl } from "../constants";
 
 interface ResultsProps {
     chainId: typeof CHAIN_ID,

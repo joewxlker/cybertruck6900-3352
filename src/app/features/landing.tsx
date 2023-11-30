@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { type FC } from "react"
 import { Button } from "../components/button"
 
 export const Landing: FC<{ layout: string }> = ({ layout }) => {
