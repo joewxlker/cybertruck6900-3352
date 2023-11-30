@@ -7,14 +7,14 @@ import { type BaseContract, ethers } from "ethers";
 import { DappState, useDappForm } from "../hooks/form";
 import { DappFormComponent } from "./form.component";
 import { DappHeaderComponent } from "./header.component";
-import { trickOrTreatAbi, trickOrTreatAddresses } from "../constants";
+import { SupportedChainIds, trickOrTreatAbi, trickOrTreatAddresses } from "../constants";
 import { ResultsComponent } from "./results.component";
 
-export const Dapp: FC<{ chainId: ChainId.Mainnet | ChainId.Goerli;}> = ({ chainId }) => {
+export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
 
     const [eventData, setEventData] = useState<ContractEvent<Record<string, unknown>>[] | undefined>();
 
-    const form = useDappForm();
+    const form = useDappForm(chainId);
     const address = useAddress();
     const disconnect = useDisconnect();
     const { contract } = useContract(trickOrTreatAddresses[chainId], trickOrTreatAbi);
@@ -102,12 +102,12 @@ export const Dapp: FC<{ chainId: ChainId.Mainnet | ChainId.Goerli;}> = ({ chainI
             </div>}
             {!form.form.loading && form.state === DappState.PENDING_METAMASK &&  <div className="opacity-50 flex flex-col justify-center items-center gap-5 h-[300px]">
                 <div className='p-5'>
-                    <Image className='animate-spin' src='/icons/jacko.svg' alt='' height={200} width={200} />
+                    <Image className='animate-spin' src='/icons/spinner.svg' alt='' height={200} width={200} />
                 </div>
                 <p className="text-xl font-body text-white">Confirm the transaction using your wallet provider</p>
             </div>}
             {form.form.loading && <div className="flex flex-row flex-wrap gap-5 justify-center items-center p-12">
-                <Image className='animate-spin opacity-50' src='/icons/jacko.svg' alt='' height={250} width={250} />
+                <Image className='animate-spin opacity-50' src='/icons/spinner.svg' alt='' height={250} width={250} />
             </div>}
         </div>
     )

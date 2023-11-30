@@ -1,13 +1,13 @@
 import { Web3Button } from "@thirdweb-dev/react";
-import { ChainId, type SmartContract } from "@thirdweb-dev/sdk";
+import { type SmartContract } from "@thirdweb-dev/sdk";
 import { type BaseContract } from "ethers";
 import { type ChangeEvent, type FC, useCallback } from "react";
-import { erc20Addresses, trickOrTreatAddressV2, erc20Abi, trickOrTreatAbi } from "../constants";
+import { erc20Addresses, trickOrTreatAddressV2, erc20Abi, trickOrTreatAbi, type SupportedChainIds } from "../constants";
 import { type FormState, DappState } from "../hooks/form";
 import Image from "next/image";
 
 interface DappFormProps {
-    chainId: ChainId.Mainnet | ChainId.Goerli;
+    chainId: SupportedChainIds;
     form: {form: FormState, state: DappState}; 
     onUpdateAmount: (amount: ChangeEvent<HTMLInputElement>) => void;
     onSetAmountAsPercentage: (amount: number) => void;

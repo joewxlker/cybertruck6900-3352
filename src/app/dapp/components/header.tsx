@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, type FC, useCallback } from "react";
+import { type FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { type ProjectInfo } from "~/app/models/project.model";
 import { Button } from "~/app/components/button";
 
 export const DappHeader: FC<{ layout: string }> = ({

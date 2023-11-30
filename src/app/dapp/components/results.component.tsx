@@ -1,4 +1,4 @@
-import { ChainId, type ContractEvent } from "@thirdweb-dev/sdk";
+import { type ContractEvent } from "@thirdweb-dev/sdk";
 import { type BigNumber, ethers } from "ethers";
 import Image from "next/image";
 import Link from "next/link";

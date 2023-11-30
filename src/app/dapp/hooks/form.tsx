@@ -1,7 +1,7 @@
-import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
+import { ChainId, useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { ethers, type BigNumber } from "ethers";
 import { useState, useEffect, useCallback } from "react";
-import { trickOrTreatAbi, trickOrTreatAddressV2, erc20Abi, erc20Address } from "../constants";
+import { trickOrTreatAddressV2, erc20Abi, erc20Addresses, SupportedChainIds } from "../constants";
 
 export interface FormState {
     amount: number | null;
@@ -34,12 +34,12 @@ export enum DappState {
     VALID,
 }
 
-export const useDappForm = () => {
+export const useDappForm = (chainId: SupportedChainIds) => {
     const [form, setForm] = useState<FormState>(initialFormState);
     const [state, setState] = useState<DappState>(DappState.DEFAULT);
 
     const address = useAddress();
-    const { contract } = useContract(erc20Address, erc20Abi);
+    const { contract } = useContract(erc20Addresses[chainId], erc20Abi);
     const { data: erc20Balance } = useContractRead(contract,"balanceOf",[address]) as { data: BigNumber };
     const { data: trickOrTreatBalance } = useContractRead(contract,"balanceOf",[trickOrTreatAddressV2]) as { data: BigNumber };
     const { data: allowance } = useContractRead(contract,"allowance",[address, trickOrTreatAddressV2]) as { data: BigNumber };
