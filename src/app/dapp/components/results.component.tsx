@@ -17,7 +17,7 @@ export const ResultsComponent: FC<ResultsProps> = ({ eventData, chainId }) => {
             </div>}
             {eventData && eventData?.length > 0 &&
              <div className="flex flex-col gap-4 p-2 w-full h-[300px]">{eventData.map(data => (
-                <Link href={`${etherscanUrl[chainId]}/tx/${data.transaction.transactionHash}`} key={data.transaction.transactionHash} className={`${data.data.success ? 'bg-emerald-500' : 'bg-red-500'} w-full p-2`}>
+                <Link target="_blank" href={`${etherscanUrl[chainId]}/tx/${data.transaction.transactionHash}`} key={data.transaction.transactionHash} className={`${data.data.success ? 'bg-emerald-500' : 'bg-red-500'} w-full p-2 bg-opacity-50`}>
                     <span className="flex flex-row justify-between items-center">
                         <p className="text-t1 text-lg font-body">{(data.data.player as string).slice(0,10)} . . . {(data.data.player as string).slice(38)}</p>
                         <Image src='/icons/link.svg' alt='' height={20} width={20} />

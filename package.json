@@ -9,14 +9,18 @@
     "start": "next start"
   },
   "dependencies": {
-    "@thirdweb-dev/react": "^4",
-    "@thirdweb-dev/sdk": "^4",
-    "ethers": "^5",
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "@thirdweb-dev/react": "^3.14.35",
+    "@thirdweb-dev/sdk": "^3.10.54",
+    "axios": "^1.6.2",
+    "encoding": "^0.1.13",
+    "ethers": "^5.7.2",
     "next": "^13.5.4",
+    "node-fetch": "^3.3.2",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3",
     "react": "^18.2",
     "react-dom": "^18.2",
-    "@t3-oss/env-nextjs": "^0.6.0",
-    "axios": "^1.6.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {

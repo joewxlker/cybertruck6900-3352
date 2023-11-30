@@ -1,10 +1,10 @@
 {
-  "name": "CYBERTRUCK6900",
+  "name": "Cybertruck",
   "about": "",
   "symbol": "CYBER",
-  "telegram": "https://t.me/cybertruck6900portal",
-  "website": "https://www.cybertruck6900.com",
-  "twitter": "https://www.twitter.com/cybertruck69000",
+  "telegram": "https://t.me/cybertruckportal",
+  "website": "https://www.cybertruck.com",
+  "twitter": "https://www.twitter.com/",
   "taxes": {
     "initialTaxFeeOnBuy": "15",
     "initialTaxFeeOnSell": "15",
@@ -16,7 +16,7 @@
   "etherscan": "https://etherscan.io/token/0x000000000000000000000000000000000000",
   "dextools": "https://www.dextools.io/app/en/ether/pair-explorer/0x000000000000000000000000000000000000",
   "meta": {
-    "title": "CYBERTRUCK6900",
+    "title": "Cybertruck",
     "description": "",
     "icons": [
       {

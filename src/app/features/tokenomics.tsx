@@ -3,6 +3,7 @@ import { SectionWrapper } from "../components/sectionWrapper"
 import { Section } from "../components/section"
 
 import data from 'public/tokenomics.json';
+import uuid4 from "uuid4";
 
 export const Tokenomics: FC<{ layout: string }> = ({ layout }) => {
     return (
@@ -13,9 +14,9 @@ export const Tokenomics: FC<{ layout: string }> = ({ layout }) => {
             <Section.Graphics alt="" height={400} src="/trucks-900x400.png" width={900} opaque/>
             <div className="flex-1 gap-5 flex flex-col">
               <div className="flex flex-row xl:justify-between lg:justify-between xl:flex-nowrap lg:flex-nowrap flex-wrap justify-center">
-                {data.tokenData.map(props => <TokenData {...props}/>)}
+                {data.tokenData.map(props => <TokenData key={uuid4()} {...props}/>)}
               </div>
-              {data.distribution.map(props => <DistributionItem {...props} />)}
+              {data.distribution.map(props => <DistributionItem key={uuid4()} {...props} />)}
             </div>
           </Section.Body>
         </Section.Container>
@@ -37,7 +38,7 @@ const DistributionItem:FC<{ title: string; children: { title: string; body: stri
         <div className="flex flex-col">
             <h4 className="text-2xl font-heading text-t1">{title}</h4>
             <div className="flex flex-row flex-wrap gap-5 p-2 border-t1 border-[1px] border-opacity-30">
-            {children.map(childProps => <DistributionData parentTitle={title} {...childProps} />)}
+            {children.map(childProps => <DistributionData key={uuid4()} parentTitle={title} {...childProps} />)}
             </div>
         </div>
     );

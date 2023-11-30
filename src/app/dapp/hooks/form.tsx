@@ -1,7 +1,7 @@
 import { ChainId, useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { ethers, type BigNumber } from "ethers";
 import { useState, useEffect, useCallback } from "react";
-import { trickOrTreatAddressV2, erc20Abi, erc20Addresses, SupportedChainIds } from "../constants";
+import { erc20Abi, erc20Addresses, SupportedChainIds, trickOrTreatAddresses } from "../constants";
 
 export interface FormState {
     amount: number | null;
@@ -16,7 +16,7 @@ export interface FormState {
 const initialFormState: FormState = {
     amount: null,
     allowance: null,
-    contractAddress: trickOrTreatAddressV2,
+    contractAddress: '',
     contractBalance: null,
     spenderAddress: null,
     spenderBalance: null,
@@ -29,6 +29,7 @@ export enum DappState {
     PENDING_METAMASK,
     ERROR,
     INVALID_PARAMS,
+    INSUFFICIENT_CONTRACT_BALANCE,
     DEFAULT,
     INVALID_BALANCES,
     VALID,
@@ -41,13 +42,18 @@ export const useDappForm = (chainId: SupportedChainIds) => {
     const address = useAddress();
     const { contract } = useContract(erc20Addresses[chainId], erc20Abi);
     const { data: erc20Balance } = useContractRead(contract,"balanceOf",[address]) as { data: BigNumber };
-    const { data: trickOrTreatBalance } = useContractRead(contract,"balanceOf",[trickOrTreatAddressV2]) as { data: BigNumber };
-    const { data: allowance } = useContractRead(contract,"allowance",[address, trickOrTreatAddressV2]) as { data: BigNumber };
+    const { data: trickOrTreatBalance } = useContractRead(contract,"balanceOf",[trickOrTreatAddresses[chainId]]) as { data: BigNumber };
+    const { data: allowance } = useContractRead(contract,"allowance",[address, trickOrTreatAddresses[chainId]]) as { data: BigNumber };
 
+    
     
     const updateForm = useCallback((value: Partial<FormState>) => {
         setForm(prev => ({...prev, ...value }));
     }, [setForm]);
+    
+    useEffect(() => {
+        updateForm({ contractAddress: trickOrTreatAddresses[chainId]});
+    }, [updateForm, chainId]);
 
     const updateState = useCallback((state: DappState) => {
         setState(state)
@@ -64,7 +70,7 @@ export const useDappForm = (chainId: SupportedChainIds) => {
     }, [trickOrTreatBalance, erc20Balance, _updateBalances]);
     
     useEffect(() => {
-        address && updateForm({ spenderAddress: address });
+        updateForm({ spenderAddress: address });
     }, [address, updateForm]);
 
     useEffect(() => {
@@ -83,7 +89,10 @@ export const useDappForm = (chainId: SupportedChainIds) => {
 
     useEffect(() => {
         if(state !== DappState.PENDING && state !== DappState.PENDING_METAMASK && state !== DappState.REQUIRE_APPROVAL){
-            if(!form.amount || !form.contractBalance || !form.contractAddress || !form.spenderAddress || !form.spenderBalance){
+            console.log(form);
+            if(!form.contractBalance){
+                updateState(DappState.INSUFFICIENT_CONTRACT_BALANCE);
+            } else if(!form.amount || !form.contractBalance || !form.contractAddress || !form.spenderAddress || !form.spenderBalance){
                 updateState(DappState.INVALID_PARAMS);
             } else if(form.amount > form.contractBalance || form.amount > form.spenderBalance) {
                 updateState(DappState.INVALID_BALANCES);

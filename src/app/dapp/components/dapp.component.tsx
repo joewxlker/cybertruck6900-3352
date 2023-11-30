@@ -1,6 +1,6 @@
 "use client"
 
-import { useAddress, useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent, ChainId } from "@thirdweb-dev/react";
+import { useAddress, useDisconnect, type SmartContract, useContract, useContractEvents, type ContractEvent } from "@thirdweb-dev/react";
 import Image from "next/image"
 import { type ChangeEvent, type FC, useCallback, useEffect, useState } from "react"
 import { type BaseContract, ethers } from "ethers";
@@ -15,13 +15,12 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const [eventData, setEventData] = useState<ContractEvent<Record<string, unknown>>[] | undefined>();
 
     const form = useDappForm(chainId);
-    const address = useAddress();
     const disconnect = useDisconnect();
     const { contract } = useContract(trickOrTreatAddresses[chainId], trickOrTreatAbi);
     const events = useContractEvents(contract, 'TrickOrTreatResult')
 
     useEffect(() => {
-        const playerData = events.data?.filter(data => data.data.player === form.form.spenderAddress);
+        const playerData = events.data?.filter((data: any) => data.data.player === form.form.spenderAddress);
         setEventData(playerData);
     }, [events.data, form.form.spenderAddress]);
 
@@ -47,7 +46,7 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
                 form.updateForm({ amount: 0 });
                 form.updateState(DappState.INVALID_PARAMS);
             })
-            .catch(err => {
+            .catch((err: any) => {
                 console.log(err);
                 form.updateState(DappState.ERROR);
             });
@@ -57,12 +56,12 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
     const onApprove = useCallback((contract: SmartContract<BaseContract>) => {
         contract
         .call("trickOrTreat", [])
-        .then((data) => {
+        .then((data: any) => {
             console.log(data);
             form.updateBalances();
             form.updateState(DappState.INVALID_PARAMS);
         })
-        .catch(err => {
+        .catch((err: any) => {
             console.log(err);
             form.updateState(DappState.ERROR);
         });
@@ -81,7 +80,7 @@ export const Dapp: FC<{ chainId: SupportedChainIds;}> = ({ chainId }) => {
         <div id="dapp" className={`w-full flex flex-col bg-b3 overflow-clip border-[1px] border-opacity-30 border-t1 shadow-black shadow-lg p-4 max-w-[100vw]`}>
             <DappHeaderComponent 
                 onDisconnect={onDisconnect} 
-                address={address}/>
+                address={form.form.spenderAddress ?? ''}/>
             {!form.form.loading && form.state !== DappState.PENDING && form.state !== DappState.PENDING_METAMASK &&  <div className="flex flex-row xl:flex-nowrap lg:flex-nowrap flex-wrap gap-5 min-h-[300px]">
                 <div className="w-full flex flex-col px-2 py-3 bg-p1 shadow-inner shadow-black bg-b3 min-w-[15rem]">
                     <DappFormComponent
